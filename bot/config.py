@@ -46,6 +46,7 @@ class PollingConfig(BaseConfig):
     token = ''
 
 
+# Detect if in heroku/webhook env if TOKEN in env vars key
 if os.getenv('TOKEN'):
     CONFIG = WebhookConfig()
     logger.info('You are using WebhookConfig. :)')

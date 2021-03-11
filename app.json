@@ -1,0 +1,13 @@
+{
+    "name": "ptb-skeleton",
+    "desctiption": "Skeleton for python-telegram-bot",
+    "keywords": [
+        "python",
+        "telegram",
+        "bot",
+        "telegram-bot",
+        "python-telegram-bot"
+    ],
+    "website": "https://github.com/hexatester/ptb-skeleton/",
+    "repository": "https://github.com/hexatester/ptb-skeleton/"
+}

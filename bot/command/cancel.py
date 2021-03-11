@@ -6,9 +6,7 @@ from telegram.ext import CommandHandler
 
 def cancel(update, context):
     """Send a message when the command /cancel is issued."""
-    update.message.reply_text('Cancel what?')
+    update.message.reply_text("Cancel what?")
 
 
-CANCEL_HANDLERS = [
-    CommandHandler('cancel', cancel)
-]
+CANCEL_HANDLERS = [CommandHandler("cancel", cancel)]

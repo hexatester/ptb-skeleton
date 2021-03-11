@@ -1,6 +1,12 @@
-from bot import logging
-from telegram.error import (TelegramError, Unauthorized, BadRequest,
-                            TimedOut, ChatMigrated, NetworkError)
+import logging
+from telegram.error import (
+    TelegramError,
+    Unauthorized,
+    BadRequest,
+    TimedOut,
+    ChatMigrated,
+    NetworkError,
+)
 from .badrequest import badrequest
 from .chatmigrated import chatmigrated
 from .networkerror import networkerror

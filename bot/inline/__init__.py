@@ -11,7 +11,6 @@ Basic inline bot example. Applies different text transformations.
 Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
-from bot import logging, CONFIG
 from bot.utils.helpers import article
 from uuid import uuid4
 from .inlinebot import inlinebot
@@ -32,17 +31,18 @@ def inlinequery(update, context):
         # if no data results_list
         results_list.append(
             article(
-                title='Not found. X',
-                description='',
-                message_text=f"Didnt found anything? pm me{CONFIG.username}"
+                title="Not found. X",
+                description="",
+                message_text=f"Didnt found anything?",
             )
         )
     update.inline_query.answer(results_list)
 
+
 HANDLERS = [InlineQueryHandler(inlinequery)]
+
 
 def register_inlines(dispatcher):
     if HANDLERS:
         for handler in HANDLERS:
             dispatcher.add_handler(handler)
-    

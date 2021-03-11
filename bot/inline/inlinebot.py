@@ -12,12 +12,11 @@ Basic inline bot example. Applies different text transformations.
 Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
-from bot import logging
+import logging
 from bot.utils.helpers import article
 from uuid import uuid4
 
-from telegram import InlineQueryResultArticle, ParseMode, \
-    InputTextMessageContent
+from telegram import InlineQueryResultArticle, ParseMode, InputTextMessageContent
 from telegram.utils.helpers import escape_markdown
 
 # Enable logging
@@ -27,6 +26,7 @@ logger = logging.getLogger(__name__)
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
 
+
 def inlinebot(update, context):
     """Handle the inline query."""
     query = update.inline_query.query
@@ -34,19 +34,17 @@ def inlinebot(update, context):
         article(
             title="Caps",
             description="Caps",
-            message_text=InputTextMessageContent(query.upper())
+            message_text=InputTextMessageContent(query.upper()),
         ),
         article(
             title="Bold",
             description="Bold",
-            message_text=InputTextMessageContent(
-                "*{}*".format(escape_markdown(query)))
+            message_text=InputTextMessageContent("*{}*".format(escape_markdown(query))),
         ),
         article(
             title="Italic",
             description="Italic",
-            message_text=InputTextMessageContent(
-                "_{}_".format(escape_markdown(query)))
+            message_text=InputTextMessageContent("_{}_".format(escape_markdown(query))),
         ),
     ]
     return results

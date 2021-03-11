@@ -15,9 +15,14 @@ Send /start to initiate the conversation.
 Press Ctrl-C on the command line to stop the bot.
 """
 
+import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, ConversationHandler
-from bot import logging
+from telegram.ext import (
+    Updater,
+    CommandHandler,
+    CallbackQueryHandler,
+    ConversationHandler,
+)
 
 # Enable logging
 logger = logging.getLogger(__name__)
@@ -38,14 +43,15 @@ def start(update, context):
     # The keyboard is a list of button rows, where each row is in turn
     # a list (hence `[[...]]`).
     keyboard = [
-        [InlineKeyboardButton("1", callback_data=str(ONE)),
-         InlineKeyboardButton("2", callback_data=str(TWO))]
+        [
+            InlineKeyboardButton("1", callback_data=str(ONE)),
+            InlineKeyboardButton("2", callback_data=str(TWO)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     # Send message with text and appended InlineKeyboard
     update.message.reply_text(
-        "Start handler, Choose a route",
-        reply_markup=reply_markup
+        "Start handler, Choose a route", reply_markup=reply_markup
     )
     # Tell ConversationHandler that we're in state `FIRST` now
     return FIRST
@@ -58,8 +64,10 @@ def start_over(update, context):
     # Get Bot from CallbackContext
     bot = context.bot
     keyboard = [
-        [InlineKeyboardButton("1", callback_data=str(ONE)),
-         InlineKeyboardButton("2", callback_data=str(TWO))]
+        [
+            InlineKeyboardButton("1", callback_data=str(ONE)),
+            InlineKeyboardButton("2", callback_data=str(TWO)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     # Instead of sending a new message, edit the message that
@@ -69,7 +77,7 @@ def start_over(update, context):
         chat_id=query.message.chat_id,
         message_id=query.message.message_id,
         text="Start handler, Choose a route",
-        reply_markup=reply_markup
+        reply_markup=reply_markup,
     )
     return FIRST
 
@@ -79,15 +87,17 @@ def one(update, context):
     query = update.callback_query
     bot = context.bot
     keyboard = [
-        [InlineKeyboardButton("3", callback_data=str(THREE)),
-         InlineKeyboardButton("4", callback_data=str(FOUR))]
+        [
+            InlineKeyboardButton("3", callback_data=str(THREE)),
+            InlineKeyboardButton("4", callback_data=str(FOUR)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(
         chat_id=query.message.chat_id,
         message_id=query.message.message_id,
         text="First CallbackQueryHandler, Choose a route",
-        reply_markup=reply_markup
+        reply_markup=reply_markup,
     )
     return FIRST
 
@@ -97,15 +107,17 @@ def two(update, context):
     query = update.callback_query
     bot = context.bot
     keyboard = [
-        [InlineKeyboardButton("1", callback_data=str(ONE)),
-         InlineKeyboardButton("3", callback_data=str(THREE))]
+        [
+            InlineKeyboardButton("1", callback_data=str(ONE)),
+            InlineKeyboardButton("3", callback_data=str(THREE)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(
         chat_id=query.message.chat_id,
         message_id=query.message.message_id,
         text="Second CallbackQueryHandler, Choose a route",
-        reply_markup=reply_markup
+        reply_markup=reply_markup,
     )
     return FIRST
 
@@ -115,15 +127,17 @@ def three(update, context):
     query = update.callback_query
     bot = context.bot
     keyboard = [
-        [InlineKeyboardButton("Yes, let's do it again!", callback_data=str(ONE)),
-         InlineKeyboardButton("Nah, I've had enough ...", callback_data=str(TWO))]
+        [
+            InlineKeyboardButton("Yes, let's do it again!", callback_data=str(ONE)),
+            InlineKeyboardButton("Nah, I've had enough ...", callback_data=str(TWO)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(
         chat_id=query.message.chat_id,
         message_id=query.message.message_id,
         text="Third CallbackQueryHandler. Do want to start over?",
-        reply_markup=reply_markup
+        reply_markup=reply_markup,
     )
     # Transfer to conversation state `SECOND`
     return SECOND
@@ -134,15 +148,17 @@ def four(update, context):
     query = update.callback_query
     bot = context.bot
     keyboard = [
-        [InlineKeyboardButton("2", callback_data=str(TWO)),
-         InlineKeyboardButton("4", callback_data=str(FOUR))]
+        [
+            InlineKeyboardButton("2", callback_data=str(TWO)),
+            InlineKeyboardButton("4", callback_data=str(FOUR)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     bot.edit_message_text(
         chat_id=query.message.chat_id,
         message_id=query.message.message_id,
         text="Fourth CallbackQueryHandler, Choose a route",
-        reply_markup=reply_markup
+        reply_markup=reply_markup,
     )
     return FIRST
 
@@ -155,23 +171,26 @@ def end(update, context):
     bot.edit_message_text(
         chat_id=query.message.chat_id,
         message_id=query.message.message_id,
-        text="See you next time!"
+        text="See you next time!",
     )
     return ConversationHandler.END
 
 
 INLINEKEYBOARD2_HANDLERS = [
     ConversationHandler(
-        entry_points=[CommandHandler('inlinekeyboard2', start)],
+        entry_points=[CommandHandler("inlinekeyboard2", start)],
         states={
-            FIRST: [CallbackQueryHandler(one, pattern='^' + str(ONE) + '$'),
-                    CallbackQueryHandler(two, pattern='^' + str(TWO) + '$'),
-                    CallbackQueryHandler(
-                        three, pattern='^' + str(THREE) + '$'),
-                    CallbackQueryHandler(four, pattern='^' + str(FOUR) + '$')],
-            SECOND: [CallbackQueryHandler(start_over, pattern='^' + str(ONE) + '$'),
-                     CallbackQueryHandler(end, pattern='^' + str(TWO) + '$')]
+            FIRST: [
+                CallbackQueryHandler(one, pattern="^" + str(ONE) + "$"),
+                CallbackQueryHandler(two, pattern="^" + str(TWO) + "$"),
+                CallbackQueryHandler(three, pattern="^" + str(THREE) + "$"),
+                CallbackQueryHandler(four, pattern="^" + str(FOUR) + "$"),
+            ],
+            SECOND: [
+                CallbackQueryHandler(start_over, pattern="^" + str(ONE) + "$"),
+                CallbackQueryHandler(end, pattern="^" + str(TWO) + "$"),
+            ],
         },
-        fallbacks=[CommandHandler('start', start)]
+        fallbacks=[CommandHandler("start", start)],
     ),
 ]

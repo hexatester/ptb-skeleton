@@ -9,5 +9,15 @@
         "python-telegram-bot"
     ],
     "website": "https://github.com/hexatester/ptb-skeleton/",
-    "repository": "https://github.com/hexatester/ptb-skeleton/"
+    "repository": "https://github.com/hexatester/ptb-skeleton/",
+    "env": {
+        "BOT_TOKEN": {
+            "description": "A token for your bot from @BotFather (https://t.me/BotFather)",
+            "value": "input your token here"
+        },
+        "APP_URL": {
+            "description": "Heroku app url example `https://myapp.herokuapp.com/`",
+            "value": "https://<app name>.herokuapp.com/"
+        }
+    }
 }
